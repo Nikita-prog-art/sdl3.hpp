@@ -37,6 +37,10 @@ void test_version_and_error_helpers()
     REQUIRE(sdl::current_error().empty());
     REQUIRE(sdl::try_check(true, "ok").has_value());
     REQUIRE(!sdl::try_check(false, "expected failure").has_value());
+
+    REQUIRE(sdl::ticks().count() >= 0);
+    REQUIRE(sdl::ticks_ns().count() >= 0);
+    sdl::delay(std::chrono::milliseconds(0));
 }
 
 void test_properties()

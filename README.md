@@ -30,3 +30,11 @@ ctest --test-dir build --output-on-failure
 
 The test binary uses SDL's dummy video driver and software renderer, so it can
 run in a headless environment when the SDL 3 package provides those backends.
+
+## Examples
+
+```sh
+cmake -S . -B build -DSDL3_HPP_BUILD_EXAMPLES=ON
+cmake --build build --target sdl3_hpp_snake
+./build/sdl3_hpp_snake
+```

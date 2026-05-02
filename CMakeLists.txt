@@ -17,6 +17,7 @@ find_package(SDL3 REQUIRED CONFIG COMPONENTS SDL3)
 target_link_libraries(sdl3_hpp INTERFACE SDL3::SDL3)
 
 option(SDL3_HPP_BUILD_TESTS "Build sdl3.hpp tests" ON)
+option(SDL3_HPP_BUILD_EXAMPLES "Build sdl3.hpp examples" ON)
 
 include(CTest)
 
@@ -31,4 +32,15 @@ if(BUILD_TESTING AND SDL3_HPP_BUILD_TESTS)
     endif()
 
     add_test(NAME sdl3_hpp_tests COMMAND sdl3_hpp_tests)
+endif()
+
+if(SDL3_HPP_BUILD_EXAMPLES)
+    add_executable(sdl3_hpp_snake examples/snake.cpp)
+    target_link_libraries(sdl3_hpp_snake PRIVATE sdl3_hpp)
+    target_compile_features(sdl3_hpp_snake PRIVATE cxx_std_23)
+    if(MSVC)
+        target_compile_options(sdl3_hpp_snake PRIVATE /W4)
+    else()
+        target_compile_options(sdl3_hpp_snake PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
 endif()

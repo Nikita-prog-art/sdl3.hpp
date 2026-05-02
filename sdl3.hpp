@@ -249,6 +249,31 @@ struct version {
     return std::to_string(value.major) + "." + std::to_string(value.minor) + "." + std::to_string(value.patch);
 }
 
+[[nodiscard]] inline std::chrono::milliseconds ticks() noexcept
+{
+    return std::chrono::milliseconds(SDL_GetTicks());
+}
+
+[[nodiscard]] inline std::chrono::nanoseconds ticks_ns() noexcept
+{
+    return std::chrono::nanoseconds(SDL_GetTicksNS());
+}
+
+inline void delay(std::chrono::milliseconds duration) noexcept
+{
+    auto count = duration.count();
+    if (count < 0) {
+        count = 0;
+    }
+
+    constexpr auto max_delay = static_cast<decltype(count)>(std::numeric_limits<Uint32>::max());
+    if (count > max_delay) {
+        count = max_delay;
+    }
+
+    SDL_Delay(static_cast<Uint32>(count));
+}
+
 struct size {
     int width = 0;
     int height = 0;

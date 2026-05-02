@@ -474,6 +474,31 @@ std::string text = sdl::to_string(linked);
 `linked_version()` показывает версию SDL library, с которой программа реально
 запущена.
 
+## Timer Helpers
+
+```cpp
+auto ms = sdl::ticks();
+auto ns = sdl::ticks_ns();
+sdl::delay(std::chrono::milliseconds(8));
+```
+
+`sdl::ticks()` и `sdl::ticks_ns()` возвращают chrono duration с момента старта
+SDL timer. `sdl::delay()` принимает `std::chrono::milliseconds` и вызывает
+`SDL_Delay()`.
+
+## Examples
+
+Snake example:
+
+```sh
+cmake -S . -B build -DSDL3_HPP_BUILD_EXAMPLES=ON
+cmake --build build --target sdl3_hpp_snake
+./build/sdl3_hpp_snake
+```
+
+Управление: arrows или WASD, `Space`/`R` для рестарта после проигрыша,
+`Esc` для выхода.
+
 ## Headless Тестирование
 
 Для CI или headless окружения часто удобно использовать dummy video driver и
@@ -516,4 +541,3 @@ ctest --test-dir build --output-on-failure
   предоставлен как низкоуровневая опция для пользовательских wrapper-слоев.
 - Потоковая безопасность остается такой же, как у соответствующих SDL-вызовов.
   Если SDL требует main thread, wrapper не меняет это требование.
-
